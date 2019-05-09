@@ -1,0 +1,285 @@
+﻿ void Grouping(List<UE> UEList, double threshold)
+        {
+            List<UE> DCHGroup = UserList.Where(U => U.DistansFromBS > 150).ToList();
+            List<UE> FACHGroup = UserList.Where(U => U.DistansFromBS <= 150).ToList();
+            UE DCH_worstcase = rrc.Farest_UE(DCHGroup);
+        //    DCH_worstcase.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_WorstCase;
+            UE FACH_worstcase = rrc.Farest_UE(FACHGroup);
+        //    FACH_worstcase.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_WorstCase;
+
+            DCHGroup.ForEach(delegate(UE ue)
+            {
+                if (ue == DCH_worstcase)
+                    ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_WorstCase;
+                else
+                ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_DCHGroup;
+            });
+            FACHGroup.ForEach(delegate(UE ue)
+            {
+                if (ue == FACH_worstcase)
+                    ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_WorstCase;
+                else
+                ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_icon;
+            });
+           
+           // mydraw.onEventPaint(myGraphics, DCH_worstcase.DistansFromBS, Color.Red);
+            mydraw.onEventPaint(myGraphics, FACH_worstcase.DistansFromBS, Color.Blue);
+            mydraw.onEventPaint(myGraphics, (double)radius, Color.Black);
+
+
+        }
+		--------------------
+		// HandOver_UserList.ForEach(delegate(UE ue) {
+                                                 //  ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_Out;
+                                                  //      });
+												  =================================
+	//UE worst_ue=rrc.Farest_UE(UserList);
+                    //UserList.RemoveAll(ue =>(int) ue.DistansFromBS > radius);// Remove the  user out the cell edge
+                  //  UE.GetWorstCase(UserList);
+                  //  UE selected = UserList.Find(conf => conf== UE.UE_WorstCase);
+        --------------------------------
+		 public void Grouping(List<UE> UEList)
+       {
+         /* // DCHGroup = UEList.Where(U => U.DistansFromBS > threshold).ToList();
+           //FACHGroup = UEList.Where(U => U.DistansFromBS <= threshold).ToList();
+            DCH_worstcase = Farest_UE(DCHGroup);
+           //    DCH_worstcase.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_WorstCase;
+            FACH_worstcase = Farest_UE(FACHGroup);
+           //    FACH_worstcase.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_WorstCase;
+
+        /*   DCHGroup.ForEach(delegate(UE ue)
+           {
+               if (ue == DCH_worstcase)
+                   ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_WorstCase;
+               else
+                   ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_DCHGroup;
+           });
+           FACHGroup.ForEach(delegate(UE ue)
+           {
+               if (ue == FACH_worstcase)
+                   ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_WorstCase;
+               
+           });*/
+
+           // mydraw.onEventPaint(myGraphics, DCH_worstcase.DistansFromBS, Color.Red);
+           //mydraw.onEventPaint(myGraphics, FACH_worstcase.DistansFromBS, Color.Blue);
+         //  mydraw.onEventPaint(myGraphics, (double)radius, Color.Black);
+
+         
+       }
+
+		-----------------------------------
+		 public List<UE> Dividusers(Form1 form,List<UE> UEList,  double radius)
+       {
+         //  Form1 form = new Form1();
+           CompareDCH_FACH(UEList);
+           DCHGroup.Clear();
+           FACHGroup.Clear();
+          string s="";
+          threshold = FACH_worstcase.DistansFromBS;
+           foreach (UE ue in UEList)
+           {
+               if (ue.DistansFromBS <= threshold)
+               {
+                   ue.Group = UserGroup.FACH_Group;
+                   ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_icon;
+                   FACHGroup.Add(ue);
+                 s=  " >> User ( " + ue.Name + " ) Join FACH GROUP \n";
+               }
+               else if ((ue.DistansFromBS > threshold) && (ue.DistansFromBS <= radius))
+               {
+                   ue.Group = UserGroup.DCH_Group;
+                   ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_DCHGroup;
+                   DCHGroup.Add(ue);
+                   s = " >> User ( " + ue.Name + " ) Join DCH GROUP\n";
+               }
+               else
+               {
+                   ue.Group = UserGroup.Others;
+                   ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_Out;
+                   //OtherGroup.Add(ue); // 
+                   s = " >> User ( " + ue.Name + " ) Leave The BS area \n";
+               }
+               form.display(s);
+           }
+
+          if(DCHGroup.Count>0)
+           DCH_worstcase = Farest_UE(DCHGroup);
+          //if (FACHGroup.Count > 0)
+          // FACH_worstcase = Farest_UE(FACHGroup);
+
+
+          UEList.ForEach(delegate(UE ue)   // To Change Worst User Image in DCH and FACH Groups
+              {
+                  if ((ue == DCH_worstcase) || (ue == FACH_worstcase))
+                  {
+                   //   ue.BackgroundImage = global::lte_sim_Dimo.Properties.Resources.UE_WorstCase;
+                      s = " >> User ( " + ue.Name + " ) Is the Worst case now in FACH or in DCH \n";
+                     
+                      form.display(s);
+                  }
+              });
+          s = "----------------------------------------------------- \n";
+          form.display(s);
+           return UEList;
+       }
+	   ==========================
+
+	      public void Dual_Transmission_Power(List<UE> mylist)
+        {
+            bool found = false,dual=false;
+            double sum = 0, fach_power = 0,cumulative_DCH=0,Best_FACH=0,Cell_Edge_user_DCH=0 ;
+            double first_user_fach = 0, next_user_fach = 0,different_first_next_fach=0;
+            mylist = SortByDistanc(mylist);
+            _PropagationMode = TransmissionMode.DCH;
+            Index++;
+            mylist.ForEach(delegate(UE ue)
+            {
+                string s = ue.ID + ", Out of Coverge Area ";
+                ue.IsWorstCase = false;
+                if (ue.Group != UserGroup.Others)
+                {
+                    fach_power = ue.UE_FACH_Power_Needed;
+                    cumulative_DCH += ue.UE_DCH_Power_Needed;
+                    different_first_next_fach = ue.UE_FACH_Power_Needed - first_user_fach;
+                    double dif = ue.UE_DCH_Power_Needed - different_first_next_fach;
+                   // dual = false;
+                    if (!found)
+                    {
+                        sum += ue.UE_DCH_Power_Needed;
+                        if (sum > ue.UE_FACH_Power_Needed)   // if ((sum > ue.UE_FACH_Power_Needed) && !found)
+                        {
+                            ue.IsWorstCase = true;
+                            found = true;
+                            _Dual_FACH_Power = ue.UE_FACH_Power_Needed;
+                            _PropagationMode = TransmissionMode.DUAL;
+                        }
+                    }
+                    else
+                    {
+                        _Dual_DCH_Power += ue.UE_DCH_Power_Needed;
+                        if (dif < 0)
+                        {
+                            if(!dual) Best_FACH = first_user_fach;
+                            Cell_Edge_user_DCH += ue.UE_DCH_Power_Needed;
+                            dual = true;
+                        }
+                        else
+                        {
+                            Best_FACH = 0;
+                            Cell_Edge_user_DCH =0;
+                            dual = false;
+                        }
+
+                    }
+                    //cumulative_DCH += ue.UE_DCH_Power_Needed;
+                  //  different_first_next_fach=ue.UE_FACH_Power_Needed-first_user_fach;
+                   // double dif = ue.UE_DCH_Power_Needed - different_first_next_fach;
+                    s = ue.ID + "," + ue.UE_DCH_Power_Needed + "," + ue.UE_FACH_Power_Needed + "," + cumulative_DCH + "," + different_first_next_fach +","+dif +","+ found;
+                    first_user_fach=ue.UE_FACH_Power_Needed;
+                }
+                
+                Result.write(s,"details_"+mylist.Count.ToString()+" users_");
+            });
+
+            Result.write("UE_Id,DCH Power,FACH Power,Cumulative_DCH,FACH2-FACH1,DCH-Difference", "details_" + mylist.Count.ToString() + " users_");
+          //  Result.write("0,0,0,0,0,0,0,0", "details_" + mylist.Count.ToString() + " users_");
+            _DCH_Power = _Dual_DCH_Power + sum;
+            _Dynamic_FACH_Power = fach_power;
+            if (dual)
+                _DUAL_Power_Proposed = Cell_Edge_user_DCH + Best_FACH;// _Dual_FACH_Power;// +_Dual_DCH_Power;
+            else if (_Dynamic_FACH_Power < _DCH_Power)
+                _DUAL_Power_Proposed = _Dynamic_FACH_Power;
+            else
+                _DUAL_Power_Proposed = _DCH_Power;
+          
+            string str = _DCH_Power + "," + _Dynamic_FACH_Power +","+ _DUAL_Power_Proposed;
+            Result.write(str);
+        }
+
+	   ===========================
+
+	    private double DualTransmissionPower(List<UE> mylist)
+        {
+            List<double> Bestdual = new List<double>();
+            double sum = 0,  Max_FACH = 0,Dual_power=0;
+            bool found = false;
+            Max_FACH = FACH_Transmission_Power(mylist);
+            Result.write(Index.ToString()+"---------", "dual");
+             for(int i=0;i<mylist.Count-1;i++)
+             {
+                 //sum = 0;
+                 Dual_power = mylist[i].UE_FACH_Power_Needed;
+                 for(int j=i+1;j<mylist.Count;j++)
+                     Dual_power += mylist[j].UE_DCH_Power_Needed;// sum of the Fach power fot the current user and the sum of DCH for the all next users.
+                 if (Dual_power < Max_FACH)
+                 {
+                     Bestdual.Add(Dual_power);
+                     Result.write(Dual_power.ToString()+","+Max_FACH.ToString(), "dual");
+                     found = true;
+                 }
+             }
+
+             if (found)
+                 return Bestdual.Min();
+             else
+                 return Max_FACH;
+        }
+      
+	   ==============================
+	    static DataTable GetTable()
+    {
+	//
+	// Here we create a DataTable and add columns to it.
+	//
+	DataTable table = new DataTable();
+	table.Columns.Add("Dosage", typeof(int));
+	table.Columns.Add("Medication", typeof(string));
+	table.Columns.Add("Patient", typeof(string));
+	//
+	// Add another column to the data table in a different way.
+	//
+	DataColumn column = new DataColumn("Appointment", typeof(DateTime));
+	table.Columns.Add(column);
+	//
+	// Here we add some DataRows.
+	// Note that the row parameters must match the order and types of the columns.
+	//
+	table.Rows.Add(21, "Combivent", "Janet", DateTime.Now);
+	table.Rows.Add(100, "Dilantin", "Melanie", DateTime.Now);
+	return table;
+    }
+	   ===============================
+
+	    /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mylist"></param>
+        /// <returns></returns>
+        private double DualTransmissionPower(List<UE> mylist)
+        {
+            List<double> Bestdual = new List<double>();
+            double sum = 0, Max_FACH = 0, Dual_power = 0;
+            bool found = false;
+            Max_FACH = FACH_Transmission_Power(mylist);
+            Result.write(Index.ToString() + "---------", "dual");
+            for (int i = 0; i < mylist.Count - 1; i++)
+            {
+                //sum = 0;
+                Dual_power = mylist[i].UE_FACH_Power_Needed;
+                for (int j = i + 1; j < mylist.Count; j++)
+                    Dual_power += mylist[j].UE_DCH_Power_Needed;// sum of the Fach power fot the current user and the sum of DCH for the all next users.
+                if (Dual_power < Max_FACH)
+                {
+                    Bestdual.Add(Dual_power);
+                    Result.write(Dual_power.ToString() + "," + Max_FACH.ToString(), "dual");
+                    found = true;
+                }
+            }
+
+            if (found)
+                return Bestdual.Min();
+            else
+                return Max_FACH;
+        }
+	   =================================

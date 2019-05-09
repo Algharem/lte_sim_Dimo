@@ -1,0 +1,13 @@
+c:\users\algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\bin\Debug\lte_sim_Dimo.exe.config
+c:\users\algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\bin\Debug\lte_sim_Dimo.exe
+c:\users\algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\bin\Debug\lte_sim_Dimo.pdb
+c:\users\algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.Form1.resources
+c:\users\algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.Properties.Resources.resources
+c:\users\algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.UE.resources
+c:\users\algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.csproj.GenerateResource.Cache
+c:\users\algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.exe
+c:\users\algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.pdb
+C:\Users\Algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.Form2.resources
+C:\Users\Algharem\documents\visual studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.frmDrawevent.resources
+C:\Users\Algharem\Documents\Visual Studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.Form3.resources
+C:\Users\Algharem\Documents\Visual Studio 2012\Projects\lte_sim_Dimo\lte_sim_Dimo\obj\Debug\lte_sim_Dimo.csprojResolveAssemblyReference.cache
